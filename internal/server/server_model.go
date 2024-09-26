@@ -75,7 +75,8 @@ func (s *Server) Start() error {
 		ReadHeaderTimeout: s.readHeaderTimeout,
 		MaxHeaderBytes:    s.maxHeaderBytes,
 	}
-
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	fmt.Printf("Starting server on http://localhost%s\n", s.port)
 	return server.ListenAndServe()
 }

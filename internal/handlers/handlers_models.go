@@ -27,11 +27,11 @@ var (
 		Title: config.WEBSITE_TITLE,
 		Links: []Link{
 			{
-				Href: "#home",
+				Href: "/",
 				Text: "Home",
 			},
 			{
-				Href: "#about",
+				Href: "/about",
 				Text: "About",
 			},
 			{
