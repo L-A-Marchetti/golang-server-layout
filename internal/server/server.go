@@ -1,6 +1,7 @@
 package server
 
 import (
+	"db"
 	"fmt"
 	"handlers"
 	"middlewares"
@@ -14,6 +15,7 @@ func InitServer() {
 	// Add handlers for different routes
 	server.Handle("/", handlers.IndexHandler)      // Root route
 	server.Handle("/about", handlers.AboutHandler) // About route
+	server.Handle("/create-user", db.CreateUser)
 
 	// Add middlewares
 	server.Use(middlewares.LoggingMiddleware)

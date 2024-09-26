@@ -1,6 +1,8 @@
 package middlewares
 
-import "net/http"
+import (
+	"net/http"
+)
 
 var Paths []string
 

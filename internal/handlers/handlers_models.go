@@ -1,11 +1,15 @@
 package handlers
 
-import "config"
+import (
+	"config"
+	"db"
+)
 
 type Index struct {
 	PageTitle string
 	Header    Header
 	Footer    Footer
+	Users     []db.User
 }
 
 type Header struct {

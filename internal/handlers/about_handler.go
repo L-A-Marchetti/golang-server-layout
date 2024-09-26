@@ -8,7 +8,7 @@ import (
 // AboutHandler handles requests to the /about path.
 func AboutHandler(w http.ResponseWriter, r *http.Request) {
 	// Parse the templates from files.
-	tmpl, err := template.ParseFiles("web/pages/index.html", "web/templates/header.html", "web/templates/main.html", "web/templates/footer.html")
+	tmpl, err := template.ParseFiles("web/pages/about.html", "web/templates/header.html", "web/templates/main.html", "web/templates/footer.html")
 	if err != nil {
 		http.Error(w, "Internal Server Error (Error parsing templates)", http.StatusInternalServerError)
 		return

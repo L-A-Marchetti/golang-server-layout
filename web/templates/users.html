@@ -1,0 +1,25 @@
+{{define "users"}}
+<h1>Users</h1>
+<table border="1" style="margin-bottom: 1rem;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{range .Users}}
+            <tr>
+                <td>{{.ID}}</td>
+                <td>{{.Username}}</td>
+                <td>{{.Email}}</td>
+            </tr>
+        {{else}}
+            <tr>
+                <td colspan="3">No users found</td>
+            </tr>
+        {{end}}
+    </tbody>
+</table>
+{{end}}

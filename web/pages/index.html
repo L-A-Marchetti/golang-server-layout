@@ -13,5 +13,25 @@
 {{template "main" .}}
 {{template "footer" .}}
 
+<hr style="width: 80vw;">
+
+{{template "users" .}}
+
+<hr style="width: 80vw;">
+
+<h1>Create New User</h1>
+    <form action="/create-user" method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <input type="submit" value="Create User">
+    </form>
+
 </body>
 </html>
