@@ -1,5 +1,5 @@
 package config
 
 const (
-	WEBSITE_TITLE = "golang-server-layout"
+	WEBSITE_TITLE = "Golang Server Layout"
 )
