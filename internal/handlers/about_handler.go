@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"config"
 	"html/template"
 	"net/http"
 )
@@ -16,6 +17,7 @@ func AboutHandler(w http.ResponseWriter, r *http.Request) {
 	// Example of copying the index configuration with modifying th header title.
 	aboutData := IndexData
 	aboutData.Header.Title = "About"
+	aboutData.PageTitle = "About | " + config.WEBSITE_TITLE
 	// Execute the template and pass any data needed (nil here for simplicity).
 	err = tmpl.Execute(w, aboutData)
 	if err != nil {

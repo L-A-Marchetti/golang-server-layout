@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./internal/database:/root/internal/database
+    environment:
+      - DATABASE_URL=sqlite:///root/internal/database/database.db
