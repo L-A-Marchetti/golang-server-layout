@@ -1,15 +1,11 @@
 package db
 
-import (
-	"net/http"
-)
+import "net/http"
 
-// CreateUser handles the form submission to create a new user
-func CreateUser(w http.ResponseWriter, r *http.Request) {
+// DeleteUser handles the request to delete a user
+func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
-		username := r.FormValue("username")
-		email := r.FormValue("email")
-		password := r.FormValue("password")
+		id := r.FormValue("id")
 
 		db := SetupDatabase()
 		defer db.Close()
@@ -21,9 +17,9 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// Execute the insert statement directly within the transaction
-		insertSQL := `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`
-		_, err = tx.Exec(insertSQL, username, email, password)
+		// Execute the delete statement directly within the transaction
+		deleteSQL := `DELETE FROM users WHERE id = ?`
+		_, err = tx.Exec(deleteSQL, id)
 		if err != nil {
 			tx.Rollback() // Rollback if execution fails
 			http.Error(w, "Error executing statement", http.StatusInternalServerError)
@@ -36,10 +32,9 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// fmt.Fprintf(w, "User %s created successfully!", username)
+		// Redirect back to the index page after deletion
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	} else {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
-		return
 	}
 }

@@ -16,6 +16,7 @@ func InitServer() {
 	server.Handle("/", handlers.IndexHandler)      // Root route
 	server.Handle("/about", handlers.AboutHandler) // About route
 	server.Handle("/create-user", db.CreateUser)
+	server.Handle("/delete-user", db.DeleteUser)
 
 	// Add middlewares
 	server.Use(middlewares.LoggingMiddleware)
