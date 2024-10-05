@@ -33,31 +33,18 @@ if [ "$current_branch" = "$main_branch" ]; then
     exit 1
 fi
 
-# Ask user if they want to update and merge
-print_color "yellow" "You are currently on branch: $current_branch"
-print_color "yellow" "Do you want to update $main_branch and merge it into your current branch?"
-print_color "yellow" "This will bring your branch up to date with $main_branch, but may cause conflicts."
-read -p "Update and merge? (y/n): " answer
+# Update the main branch
+print_color "yellow" "Updating the $main_branch branch..."
+git checkout $main_branch
+git fetch origin
+git pull origin $main_branch
 
-if [[ $answer =~ ^[Yy]$ ]]; then
-    # Update the main branch
-    print_color "yellow" "Updating the $main_branch branch..."
-    git checkout $main_branch
-    git fetch origin
-    git pull origin $main_branch
+# Return to the working branch and update it
+print_color "yellow" "Updating your working branch..."
+git checkout $current_branch
+git merge $main_branch
 
-    # Return to the working branch and update it
-    print_color "yellow" "Updating your working branch..."
-    git checkout $current_branch
-    git merge $main_branch
-
-    print_color "green" "Your branch is now up to date with $main_branch."
-    print_color "yellow" "If there were any merge conflicts, please resolve them now."
-else
-    print_color "yellow" "Skipping update and merge. Your branch may be behind $main_branch."
-fi
-
-print_color "green" "You're ready to start working on branch: $current_branch"
+print_color "green" "Your branch is up to date. Happy coding!"
 print_color "yellow" "Remember to commit and push regularly to save your work:"
 print_color "green" "git add ."
 print_color "green" "git commit -m \"Description of your changes\""
