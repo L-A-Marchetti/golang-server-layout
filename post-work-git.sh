@@ -31,15 +31,6 @@ if [ "$current_branch" = "$main_branch" ]; then
     exit 1
 fi
 
-# Check if branch has an upstream
-if ! git rev-parse --abbrev-ref --symbolic-full-name @{u} &>/dev/null; then
-    print_color "yellow" "Warning: Your branch doesn't have an upstream branch set."
-    print_color "green" "To set the upstream branch, use:"
-    print_color "green" "git push -u origin $current_branch"
-    print_color "yellow" "Please set the upstream branch before continuing."
-    exit 1
-fi
-
 # Check for untracked files
 if [ -n "$(git ls-files --others --exclude-standard)" ]; then
     print_color "yellow" "Warning: You have untracked files."
