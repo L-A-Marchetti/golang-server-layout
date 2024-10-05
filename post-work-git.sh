@@ -31,25 +31,46 @@ if [ "$current_branch" = "$main_branch" ]; then
     exit 1
 fi
 
+# Check for untracked files
+if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+    print_color "yellow" "Warning: You have untracked files."
+    print_color "green" "To see these files, use: git status"
+    print_color "green" "To add all new files, use: git add ."
+    print_color "green" "To add specific files, use: git add <file1> <file2> ..."
+    print_color "yellow" "Please add these files if they should be part of your commit."
+fi
+
+# Check for unstaged changes
+if ! git diff --quiet; then
+    print_color "yellow" "Warning: You have unstaged changes."
+    print_color "green" "To see these changes, use: git status"
+    print_color "green" "To stage all changes, use: git add ."
+    print_color "green" "To stage specific files, use: git add <file1> <file2> ..."
+    print_color "yellow" "Please stage these changes if they should be part of your commit."
+fi
+
 # Check for uncommitted changes
-if ! git diff-index --quiet HEAD --; then
-    print_color "yellow" "Warning: You have uncommitted changes."
+if ! git diff --staged --quiet; then
+    print_color "yellow" "Warning: You have staged but uncommitted changes."
     print_color "green" "Please commit your changes before creating a pull request:"
-    print_color "green" "git add ."
     print_color "green" "git commit -m \"Description of your changes\""
-    print_color "green" "git push origin $current_branch"
-    exit 1
 fi
 
-# Check if all commits have been pushed
-if [ "$(git rev-parse HEAD)" != "$(git rev-parse @{u})" ]; then
-    print_color "yellow" "Warning: You have local commits that haven't been pushed."
-    print_color "green" "Please push your commits before creating a pull request:"
-    print_color "green" "git push origin $current_branch"
-    exit 1
+# Check if branch has an upstream
+if ! git rev-parse --abbrev-ref --symbolic-full-name @{u} &>/dev/null; then
+    print_color "yellow" "Warning: Your branch doesn't have an upstream branch set."
+    print_color "green" "To set the upstream branch, use:"
+    print_color "green" "git push -u origin $current_branch"
+else
+    # Check if all commits have been pushed
+    if [ "$(git rev-parse HEAD)" != "$(git rev-parse @{u})" ]; then
+        print_color "yellow" "Warning: You have local commits that haven't been pushed."
+        print_color "green" "Please push your commits before creating a pull request:"
+        print_color "green" "git push origin $current_branch"
+    fi
 fi
 
-print_color "green" "Your branch '$current_branch' is up to date and ready for a pull request!"
+print_color "green" "Your branch '$current_branch' is ready for review!"
 print_color "yellow" "To create a pull request on Gitea:"
 print_color "green" "1. Go to your Gitea repository in your web browser"
 print_color "green" "2. Click on 'Pull Requests' in the menu"
