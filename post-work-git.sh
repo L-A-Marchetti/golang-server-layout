@@ -9,7 +9,7 @@ print_color() {
         *) COLOR='\033[0m' ;;
     esac
     NC='\033[0m' # No Color
-    echo -e "${COLOR}$2${NC}"
+    printf "${COLOR}%s${NC}\n" "$2"
 }
 
 # Determine the main branch name (main or master)
@@ -28,6 +28,15 @@ if [ "$current_branch" = "$main_branch" ]; then
     print_color "red" "Error: You are on the $main_branch branch!"
     print_color "yellow" "Please switch to your feature branch before stopping work."
     print_color "green" "Use: git checkout <your_feature_branch>"
+    exit 1
+fi
+
+# Check if branch has an upstream
+if ! git rev-parse --abbrev-ref --symbolic-full-name @{u} &>/dev/null; then
+    print_color "yellow" "Warning: Your branch doesn't have an upstream branch set."
+    print_color "green" "To set the upstream branch, use:"
+    print_color "green" "git push -u origin $current_branch"
+    print_color "yellow" "Please set the upstream branch before continuing."
     exit 1
 fi
 
@@ -57,14 +66,17 @@ if ! git diff --staged --quiet; then
 fi
 
 # Check if all commits have been pushed
-if [ "$(git rev-parse HEAD)" != "$(git rev-parse @{u})" ]; then
+local_head=$(git rev-parse HEAD)
+remote_head=$(git rev-parse @{u} 2>/dev/null)
+
+if [ "$local_head" != "$remote_head" ]; then
     print_color "yellow" "Warning: You have local commits that haven't been pushed."
     print_color "green" "Please push your commits before creating a pull request:"
     print_color "green" "git push origin $current_branch"
 fi
 
 # Final check to see if everything is ready
-if [ -z "$(git status --porcelain)" ] && [ "$(git rev-parse HEAD)" == "$(git rev-parse @{u})" ]; then
+if [ -z "$(git status --porcelain)" ] && [ "$local_head" = "$remote_head" ]; then
     print_color "green" "Your branch '$current_branch' is ready for review!"
     print_color "yellow" "To create a pull request on Gitea:"
     print_color "green" "1. Go to your Gitea repository in your web browser"
