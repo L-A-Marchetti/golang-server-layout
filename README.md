@@ -1,5 +1,7 @@
 # Summary for the forum project
 
+cf [GIT WORKFLOW PROCESS #VERY IMPORTANT#](docs/GIT.md)
+
 cf [Complete todo list for more details on tasks and sub-tasks](docs/TODOS.md)
 
 ### Database
