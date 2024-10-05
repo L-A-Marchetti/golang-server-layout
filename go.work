@@ -7,4 +7,5 @@ use (
 	./internal/handlers
 	./internal/middlewares
 	./internal/server
+	./tests
 )
