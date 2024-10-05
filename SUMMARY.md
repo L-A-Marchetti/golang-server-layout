@@ -4,6 +4,10 @@
 
 ### Database
 
+cf [online DBML](https://dbdiagram.io/d/670128f4fb079c7ebd6e0d63)
+
+cf [DBML.pdf](DBML.pdf)
+
 ### Authentification
 
 - Login:
