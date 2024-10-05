@@ -53,6 +53,12 @@ cf [Data encryption, hashed passwords & sqlite security](ENCRYPTION.md)
 16. Create different user types (Guests, Users, Moderators, Administrators)
     - Define user roles and permissions in the database
 
+cf [Using go templates](TEMPLATES.md)
+
+cf [oAuth for login with google & github](OAUTH.md)
+
+cf [session cookies using UUID](UUID.md)
+
 ### Day 5-6: User Management
 
 17. Create user profile page
