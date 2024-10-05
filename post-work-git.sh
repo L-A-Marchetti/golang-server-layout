@@ -31,6 +31,15 @@ if [ "$current_branch" = "$main_branch" ]; then
     exit 1
 fi
 
+# Check if branch has an upstream
+if ! git rev-parse --abbrev-ref --symbolic-full-name @{u} &>/dev/null; then
+    print_color "yellow" "Warning: Your branch doesn't have an upstream branch set."
+    print_color "green" "To set the upstream branch, use:"
+    print_color "green" "git push -u origin $current_branch"
+    print_color "yellow" "Please set the upstream branch before continuing."
+    exit 1
+fi
+
 # Check for untracked files
 if [ -n "$(git ls-files --others --exclude-standard)" ]; then
     print_color "yellow" "Warning: You have untracked files."
@@ -56,33 +65,31 @@ if ! git diff --staged --quiet; then
     print_color "green" "git commit -m \"Description of your changes\""
 fi
 
-# Check if branch has an upstream
-if ! git rev-parse --abbrev-ref --symbolic-full-name @{u} &>/dev/null; then
-    print_color "yellow" "Warning: Your branch doesn't have an upstream branch set."
-    print_color "green" "To set the upstream branch, use:"
-    print_color "green" "git push -u origin $current_branch"
-else
-    # Check if all commits have been pushed
-    if [ "$(git rev-parse HEAD)" != "$(git rev-parse @{u})" ]; then
-        print_color "yellow" "Warning: You have local commits that haven't been pushed."
-        print_color "green" "Please push your commits before creating a pull request:"
-        print_color "green" "git push origin $current_branch"
-    fi
+# Check if all commits have been pushed
+if [ "$(git rev-parse HEAD)" != "$(git rev-parse @{u})" ]; then
+    print_color "yellow" "Warning: You have local commits that haven't been pushed."
+    print_color "green" "Please push your commits before creating a pull request:"
+    print_color "green" "git push origin $current_branch"
 fi
 
-print_color "green" "Your branch '$current_branch' is ready for review!"
-print_color "yellow" "To create a pull request on Gitea:"
-print_color "green" "1. Go to your Gitea repository in your web browser"
-print_color "green" "2. Click on 'Pull Requests' in the menu"
-print_color "green" "3. Click on 'New Pull Request'"
-print_color "green" "4. Select your branch '$current_branch' as 'source' and '$main_branch' as 'target'"
-print_color "green" "5. Add a descriptive title and comments about your changes"
-print_color "green" "6. Click on 'Create Pull Request'"
+# Final check to see if everything is ready
+if [ -z "$(git status --porcelain)" ] && [ "$(git rev-parse HEAD)" == "$(git rev-parse @{u})" ]; then
+    print_color "green" "Your branch '$current_branch' is ready for review!"
+    print_color "yellow" "To create a pull request on Gitea:"
+    print_color "green" "1. Go to your Gitea repository in your web browser"
+    print_color "green" "2. Click on 'Pull Requests' in the menu"
+    print_color "green" "3. Click on 'New Pull Request'"
+    print_color "green" "4. Select your branch '$current_branch' as 'source' and '$main_branch' as 'target'"
+    print_color "green" "5. Add a descriptive title and comments about your changes"
+    print_color "green" "6. Click on 'Create Pull Request'"
 
-print_color "yellow" "Don't forget to:"
-print_color "green" "- Clearly describe the features you've added or modified"
-print_color "green" "- Mention any issues resolved, if applicable"
-print_color "green" "- Request a review from your teammates or project manager"
-print_color "green" "- Respond to comments and make necessary changes"
+    print_color "yellow" "Don't forget to:"
+    print_color "green" "- Clearly describe the features you've added or modified"
+    print_color "green" "- Mention any issues resolved, if applicable"
+    print_color "green" "- Request a review from your teammates or project manager"
+    print_color "green" "- Respond to comments and make necessary changes"
 
-print_color "yellow" "Great job! Don't hesitate to ask for help if you have any questions."
+    print_color "yellow" "Great job! Don't hesitate to ask for help if you have any questions."
+else
+    print_color "yellow" "Please address the warnings above before creating a pull request."
+fi
