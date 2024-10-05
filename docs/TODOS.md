@@ -21,6 +21,8 @@
    - Research and implement encryption method
 8. Implement password system for database access
 
+cf [Database table creation and setup](CREATE_TABLES.md)
+
 ### Day 3-4: Authentication System
 
 9. Create HTML login page

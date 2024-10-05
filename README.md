@@ -1,6 +1,6 @@
 # Summary for the forum project
 
-cf [Complete todo list for more details on tasks and sub-tasks](TODOS.md)
+cf [Complete todo list for more details on tasks and sub-tasks](docs/TODOS.md)
 
 ### Database
 
