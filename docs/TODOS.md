@@ -23,6 +23,10 @@
 
 cf [Database table creation and setup](CREATE_TABLES.md)
 
+cf [Creating CRUD functions](CRUD.md)
+
+cf [Data encryption, hashed passwords & sqlite security](ENCRYPTION.md)
+
 ### Day 3-4: Authentication System
 
 9. Create HTML login page
