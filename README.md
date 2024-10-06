@@ -1,5 +1,9 @@
 # Summary for the forum project
 
+cf [To see again the brief presentation](https://www.canva.com/design/DAGSuyPJYaw/WaIHFc4_SCxKdQC0b4Cmdg/view?utm_content=DAGSuyPJYaw&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+
+cf [or simply get the pdf of the presention](docs/Forum-Project-Brief.pdf)
+
 cf [GIT WORKFLOW PROCESS #VERY IMPORTANT#](docs/GIT.md)
 
 cf [Complete todo list for more details on tasks and sub-tasks](docs/TODOS.md)
@@ -8,7 +12,23 @@ cf [Complete todo list for more details on tasks and sub-tasks](docs/TODOS.md)
 
 cf [online DBML](https://dbdiagram.io/d/670128f4fb079c7ebd6e0d63)
 
-cf [DBML.pdf](DBML.pdf)
+cf [DBML.pdf](docs/DBML.pdf)
+
+### Documentation and Team Processes
+
+[Git processes](docs/GIT.md)
+
+[Database processes](docs/CREATE_TABLES.md)
+
+[CRUD functions processes](docs/CRUD.md)
+
+[HTML Templates processes](docs/TEMPLATES.md)
+
+[Encryption processes](docs/ENCRYPTION.md)
+
+[oAuth processes](docs/OAUTH.md)
+
+[UUID processes](docs/UUID.md)
 
 ### Authentification
 
